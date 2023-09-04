@@ -6,7 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="T116_API_TEST_OTOMASYYONU" />
+        <module name="T116_API_TEST_OTOMASYONU" />
       </profile>
     </annotationProcessing>
   </component>
