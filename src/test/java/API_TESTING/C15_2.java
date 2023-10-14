@@ -4,11 +4,13 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.*;
+
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class C15_Post_ExpectedDataveJsonPathileAssertion {
+public class C15_2 {
                 /*
 
             https://restful-booker.herokuapp.com/booking url’ine asagidaki body’ye sahip bir
@@ -62,31 +64,23 @@ public class C15_Post_ExpectedDataveJsonPathileAssertion {
         reqBody.put(   "additionalneeds","wi-fi");
 
         Response response =given().contentType(ContentType.JSON).when()
-                            .body(reqBody.toString()).post(url);
+                .body(reqBody.toString()).post(url);
 
         response.prettyPrint();
 
-
         //ExpectedData
         JSONObject expData=new JSONObject();
+        expData.put("booking",reqBody);
 
-        expData.put( "firstname","Ahmet");
-        expData.put(  "lastname","Bulut");
-        expData.put(  "totalprice",500);
-        expData.put(  "depositpaid",false);
-        expData.put(  "bookingdates",innerData);
-        expData.put(  "additionalneeds","wi-fi");
-
-        System.out.println(expData);
         JsonPath jsonPath =response.jsonPath();
 
-        Assert.assertEquals(expData.get("firstname"),jsonPath.get("booking.firstname"));
-        Assert.assertEquals(expData.get("lastname"),jsonPath.get("booking.lastname"));
-        Assert.assertEquals(expData.get("totalprice"),jsonPath.get("booking.totalprice"));
-        Assert.assertEquals(expData.get("depositpaid"),jsonPath.get("booking.depositpaid"));
-        Assert.assertEquals(expData.getJSONObject("bookingdates").get("checkin"),jsonPath.get("booking.bookingdates.checkin"));
-        Assert.assertEquals(expData.getJSONObject("bookingdates").get("checkout"),jsonPath.get("booking.bookingdates.checkout"));
-
+        assertEquals(expData.getJSONObject("booking").get("firstname"),jsonPath.get("booking.firstname"));
+        assertEquals(expData.getJSONObject("booking").get("lastname"),jsonPath.get("booking.lastname"));
+        assertEquals(expData.getJSONObject("booking").get("totalprice"),jsonPath.get("booking.totalprice"));
+        assertEquals(expData.getJSONObject("booking").get("depositpaid"),jsonPath.get("booking.depositpaid"));
+        assertEquals(expData.getJSONObject("booking").getJSONObject("bookingdates").get("checkin"),jsonPath.get("booking.bookingdates.checkin"));
+        assertEquals(expData.getJSONObject("booking").getJSONObject("bookingdates").get("checkout"),jsonPath.get("booking.bookingdates.checkout"));
+        assertEquals(expData.getJSONObject("booking").get("additionalneeds"),jsonPath.get("booking.additionalneeds"));
 
     }
 }
